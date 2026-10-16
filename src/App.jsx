@@ -7,7 +7,6 @@ import {
 } from "lucide-react";
 import { portfolio } from "./data/portfolio.js";
 import { askPortfolioAssistant } from "./rag/chat.js";
-import { isEmbedderReady } from "./rag/embedder.js";
 import { SUGGESTED_QUESTIONS } from "./rag/config.js";
 
 const navLinks = [
@@ -159,7 +158,6 @@ function ChatAssistant() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([{ role: "assistant", text: "Hi, I’m Keshvi’s portfolio assistant. Ask me about her skills, education, or projects." }]);
   const [typing, setTyping] = useState(false);
-  const [loadingModel, setLoadingModel] = useState(false);
   const [failedQuestion, setFailedQuestion] = useState("");
   const endRef = useRef(null);
   const suggestionsVisible = messages.length === 1 && !typing;
@@ -174,7 +172,6 @@ function ChatAssistant() {
     setInput("");
     setFailedQuestion("");
     setTyping(true);
-    setLoadingModel(!isEmbedderReady());
     try {
       const answer = await askPortfolioAssistant(question, history);
       setMessages((old) => [...old, { role: "assistant", text: answer }]);
@@ -188,7 +185,6 @@ function ChatAssistant() {
       if (error.code !== "daily_limit") setFailedQuestion(question);
     } finally {
       setTyping(false);
-      setLoadingModel(false);
     }
   }
 
@@ -200,7 +196,7 @@ function ChatAssistant() {
           {message.text.split("\n\n").map((paragraph, paragraphIndex) => <p key={paragraphIndex}>{paragraph}</p>)}
           {message.dailyLimit && <a className="chat-contact-link" href="mailto:keshvi030802@gmail.com">Connect with Keshvi at keshvi030802@gmail.com</a>}
         </div></div>)}
-        {typing && <div className="chat-message assistant"><div>{loadingModel && <span className="model-loading">Loading the assistant for first use…</span>}<div className="typing-dots"><i /><i /><i /></div></div></div>}
+        {typing && <div className="chat-message assistant"><div><div className="typing-dots"><i /><i /><i /></div></div></div>}
         {failedQuestion && !typing && <div className="chat-retry"><span>Something went wrong.</span><button type="button" onClick={() => send(failedQuestion)}>Try again <ArrowRight size={13} /></button></div>}
         {suggestionsVisible && <div className="suggestions">{SUGGESTED_QUESTIONS.map((question) => <button key={question} onClick={() => send(question)}>{question}<ArrowRight size={12} /></button>)}</div>}
         <div ref={endRef} />

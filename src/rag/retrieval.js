@@ -67,3 +67,39 @@ export async function loadKnowledgeChunks() {
   }
   return chunksPromise;
 }
+
+const STOP_WORDS = new Set([
+  "about", "after", "and", "are", "can", "does", "for", "from", "her",
+  "his", "how", "in", "into", "is", "keshvi", "me", "of", "please",
+  "tell", "that", "the", "their", "there", "these", "they", "this",
+  "those", "to", "what", "when", "where", "which", "who", "with",
+  "work", "would", "you",
+]);
+
+export function retrieveByKeywords(question, chunks, topK = 3) {
+  const terms = new Set(
+    (question.toLowerCase().match(/[a-z0-9]+/g) || [])
+      .filter((term) => term.length > 2 && !STOP_WORDS.has(term)),
+  );
+  if (/tech|stack|tool|language|skill/i.test(question)) {
+    ["skills", "technology", "technologies", "stack", "language"].forEach((term) => terms.add(term));
+  }
+  if (/study|degree|college|university|education/i.test(question)) {
+    ["education", "degree", "master", "bachelor", "school"].forEach((term) => terms.add(term));
+  }
+
+  return chunks
+    .map((chunk) => {
+      const title = `${chunk.title} ${chunk.category}`.toLowerCase();
+      const keywords = (Array.isArray(chunk.keywords) ? chunk.keywords : []).join(" ").toLowerCase();
+      const text = chunk.text.toLowerCase();
+      const score = [...terms].reduce((total, term) => total +
+        (title.includes(term) ? 4 : 0) +
+        (keywords.includes(term) ? 3 : 0) +
+        (text.includes(term) ? 1 : 0), 0);
+      return { ...chunk, score };
+    })
+    .filter((chunk) => chunk.score > 0)
+    .sort((left, right) => right.score - left.score)
+    .slice(0, topK);
+}

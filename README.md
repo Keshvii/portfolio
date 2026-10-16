@@ -25,7 +25,7 @@ The OpenRouter API key must stay on a server. Never put it in frontend code, a `
 
 `api/chat.js` is a serverless API function intended for a Node serverless host such as Vercel. Deploy that function and set `OPENROUTER_API_KEY` as a server-side secret in the host's project settings. The function permits the GitHub Pages origin by default; use `CHAT_ALLOWED_ORIGINS` for additional trusted origins.
 
-Set the public (non-secret) `VITE_CHAT_API_URL` build variable to the deployed function URL, for example `https://your-api-host.example/api/chat`, then run `npm run deploy` again. The assistant remains unavailable on GitHub Pages until this API endpoint is deployed and configured.
+Without `VITE_CHAT_API_URL`, the assistant uses local keyword search over the portfolio knowledge file and returns matching excerpts. To enable generated answers, set the public (non-secret) `VITE_CHAT_API_URL` build variable to the deployed function URL, for example `https://your-api-host.example/api/chat`, then run `npm run deploy` again.
 
 The assistant uses `cohere/north-mini-code:free` through OpenRouter and the vectors in `public/portfolio-embeddings.json`. It embeds each question with the compatible MiniLM model in the browser, retrieves relevant portfolio chunks, and sends those chunks plus a short chat history to the API. Retrieved text is treated as reference data, not instructions.
 
