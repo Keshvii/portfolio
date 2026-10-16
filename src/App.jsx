@@ -22,7 +22,7 @@ function Reveal({ children, className = "", delay = 0 }) {
 function Header({ onOpenProfile }) {
   const [open, setOpen] = useState(false);
   return <header className="site-header">
-    <button className="profile-thumb" type="button" onClick={onOpenProfile} aria-label="View Keshvi’s full profile photo"><img src="/keshvi-profile.png" alt="" /></button>
+    <button className="profile-thumb" type="button" onClick={onOpenProfile} aria-label="View Keshvi’s full profile photo"><img src={`${import.meta.env.BASE_URL}keshvi-profile.png`} alt="" /></button>
     <nav className={open ? "main-nav is-open" : "main-nav"} aria-label="Main navigation">
       {navLinks.map(([label, href]) => <a key={href} href={`#${href}`} onClick={() => setOpen(false)}>{label}</a>)}
       <a className="nav-cta" href={`mailto:${portfolio.email}`}>Let’s talk <ArrowUpRight size={14} /></a>
@@ -39,14 +39,14 @@ function Hero({ onOpenProfile }) {
       <Reveal delay={0.16}><p className="hero-intro">I’m <strong>Keshvi</strong> — a full stack developer and AI researcher turning complex ideas into thoughtful digital experiences.</p></Reveal>
       <Reveal delay={0.22}><div className="hero-actions">
         <a className="button button-primary" href="#projects">Explore my work <ArrowDownRight size={16} /></a>
-        <a className="button button-quiet" href="/Keshvi.pdf" download>Download résumé <ArrowDown size={15} /></a>
+        <a className="button button-quiet" href={`${import.meta.env.BASE_URL}Keshvi.pdf`} download>Download résumé <ArrowDown size={15} /></a>
       </div></Reveal>
       <Reveal delay={0.28}><div className="hero-socials">
         {portfolio.socials.map((social) => <a key={social.label} href={social.href} target="_blank" rel="noreferrer">{social.label === "GitHub" ? <Github size={15} /> : <Linkedin size={15} />}{social.label}<ArrowUpRight size={12} /></a>)}
       </div></Reveal>
     </div>
     <Reveal className="hero-art-wrap" delay={0.2}><button className="portrait-card" type="button" onClick={onOpenProfile} aria-label="Open full profile photo">
-      <img src="/keshvi-profile.png" alt="Keshvi wearing a cream blazer and glasses" />
+      <img src={`${import.meta.env.BASE_URL}keshvi-profile.png`} alt="Keshvi wearing a cream blazer and glasses" />
       <span className="portrait-caption"><span>FULL STACK DEVELOPER · AI RESEARCHER</span></span>
       <span className="portrait-index">PROFILE / 2026</span>
     </button></Reveal>
@@ -131,7 +131,7 @@ function Skills() {
 }
 
 function Contact() {
-  return <section className="contact-section" id="contact"><div className="section-shell contact-inner"><Reveal><div className="section-index">05 <span /></div><div className="section-kicker">HAVE A PROJECT OR QUESTION?</div><h2>Let’s make<br /><em>something matter.</em></h2><a className="contact-email" href={`mailto:${portfolio.email}`}>{portfolio.email}<ArrowUpRight size={18} /></a><div className="contact-buttons"><a className="button button-primary" href={`mailto:${portfolio.email}`}><Mail size={15} /> Get in touch</a><a className="button button-quiet" href="/Keshvi.pdf" download>Download résumé <ArrowDown size={15} /></a></div></Reveal>
+  return <section className="contact-section" id="contact"><div className="section-shell contact-inner"><Reveal><div className="section-index">05 <span /></div><div className="section-kicker">HAVE A PROJECT OR QUESTION?</div><h2>Let’s make<br /><em>something matter.</em></h2><a className="contact-email" href={`mailto:${portfolio.email}`}>{portfolio.email}<ArrowUpRight size={18} /></a><div className="contact-buttons"><a className="button button-primary" href={`mailto:${portfolio.email}`}><Mail size={15} /> Get in touch</a><a className="button button-quiet" href={`${import.meta.env.BASE_URL}Keshvi.pdf`} download>Download résumé <ArrowDown size={15} /></a></div></Reveal>
       <Reveal className="contact-side" delay={0.12}><span>ELSEWHERE</span>{portfolio.socials.map((social) => <a key={social.label} href={social.href} target="_blank" rel="noreferrer">{social.label === "GitHub" ? <Github size={16} /> : <Linkedin size={16} />}{social.label}<ArrowUpRight size={14} /></a>)}<span className="contact-location">ALIGARH, INDIA<br />AVAILABLE FOR THOUGHTFUL COLLABORATIONS</span></Reveal>
     </div></section>;
 }
@@ -149,7 +149,7 @@ function ProfileLightbox({ onClose }) {
 
   return <motion.div className="profile-lightbox" role="dialog" aria-modal="true" aria-label="Keshvi’s profile photo" onClick={onClose} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
     <button className="lightbox-close" type="button" onClick={onClose} aria-label="Close profile photo"><X size={22} /></button>
-    <motion.img src="/keshvi-profile.png" alt="Keshvi wearing a cream blazer and glasses" onClick={(event) => event.stopPropagation()} initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.97 }} transition={{ duration: 0.2 }} />
+    <motion.img src={`${import.meta.env.BASE_URL}keshvi-profile.png`} alt="Keshvi wearing a cream blazer and glasses" onClick={(event) => event.stopPropagation()} initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.97 }} transition={{ duration: 0.2 }} />
     <span> KESHVI · PROFILE </span>
   </motion.div>;
 }
