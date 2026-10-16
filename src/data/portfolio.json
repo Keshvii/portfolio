@@ -1,0 +1,193 @@
+{
+  "name": "Keshvi",
+  "role": "Full Stack Developer · AI & RAG Researcher",
+  "intro": "I build useful software across web and mobile, and explore how retrieval-augmented generation can make language models more grounded and reliable. My work brings practical engineering together with academic research.",
+  "email": "keshvi030802@gmail.com",
+  "phone": "+91-7417068577",
+  "socials": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/Keshvii",
+      "handle": "@Keshvii"
+    },
+    {
+      "label": "LinkedIn",
+      "href": "https://www.linkedin.com/in/keshvi030802",
+      "handle": "keshvi030802"
+    }
+  ],
+  "education": [
+    {
+      "degree": "Master of Computer Application",
+      "field": "Computer Application",
+      "school": "Aligarh Muslim University",
+      "location": "Aligarh, India",
+      "period": "2023 — 2025",
+      "result": "CGPA 9.0",
+      "distinction": "3rd rank"
+    },
+    {
+      "degree": "Bachelor of Science",
+      "field": "Computer Application",
+      "school": "Aligarh Muslim University",
+      "location": "Aligarh, India",
+      "period": "2020 — 2023",
+      "result": "CGPA 8.5"
+    }
+  ],
+  "skills": [
+    {
+      "category": "Languages",
+      "items": [
+        "Python",
+        "Java"
+      ]
+    },
+    {
+      "category": "Frontend & mobile",
+      "items": [
+        "React.js",
+        "React Native",
+        "Tailwind CSS",
+        "NativeWind",
+        "Expo"
+      ]
+    },
+    {
+      "category": "Backend",
+      "items": [
+        "Node.js",
+        "Express.js"
+      ]
+    },
+    {
+      "category": "AI & data",
+      "items": [
+        "Prompt Engineering",
+        "RAG",
+        "LLM Integration",
+        "MongoDB",
+        "PostgreSQL"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "EduSync",
+      "type": "Academic platform",
+      "number": "01",
+      "title": "Multi-role academic platform with AI-powered assignment generation",
+      "description": "A comprehensive education management system developed for the Department of Computer Science at AMU and currently in departmental use.",
+      "details": [
+        "Four roles: Admin, Lab In-charge, Instructor, and Student",
+        "LLM-generated weekly questions, test cases, and mixed-concept challenges",
+        "Compiler API for code execution and evaluation",
+        "Lab, session, student group, and performance dashboards",
+        "Submission review, feedback, leaderboards, dark mode, and activity logs"
+      ],
+      "stack": [
+        "React.js",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "Tailwind CSS",
+        "LLM APIs"
+      ],
+      "motif": "edu"
+    },
+    {
+      "name": "Talk2Doc",
+      "type": "Mobile application",
+      "number": "02",
+      "title": "Mobile doctor consultation app",
+      "description": "A React Native consultation app for a single doctor's practice, supporting the patient journey from registration and payment through secure chat and reporting.",
+      "details": [
+        "Patient registration and payment before consultation",
+        "Secure doctor–patient chat with text, image, and file sharing",
+        "Consultation lifecycle management",
+        "Feedback management and report generation"
+      ],
+      "stack": [
+        "React Native",
+        "Expo",
+        "NativeWind",
+        "Node.js",
+        "Express.js",
+        "PostgreSQL"
+      ],
+      "motif": "talk"
+    }
+  ],
+  "publications": [
+    {
+      "title": "Retrieval-Augmented Generation for Large Language Models: Evolution, Architectures, Applications, and Challenges (2020–2025)",
+      "publisher": "Wiley · WIREs Data Mining and Knowledge Discovery",
+      "date": "August 5, 2026",
+      "doi": "https://doi.org/10.1002/widm.70122",
+      "kind": "Review paper",
+      "summary": "A PRISMA-guided review of 91 studies on RAG evolution, architectures, retrieval and reranking, faithfulness, robustness, security, governance, and open research challenges.",
+      "tags": [
+        "RAG architectures",
+        "Retrieval",
+        "Faithfulness",
+        "Governance"
+      ]
+    },
+    {
+      "title": "AI-Driven Knowledge Retrieval for Medical Question-Answering Using Large Language Models and Retrieval-Augmented Generation",
+      "publisher": "IEEE · IMPACT2026",
+      "date": "February 14, 2026",
+      "doi": "https://doi.org/10.1109/IMPACT68503.2026.11468290",
+      "kind": "Comparative study",
+      "summary": "Compares prompting and RAG approaches on MedMCQA, with Answer-Expansion RAG achieving the strongest accuracy and a statistically significant improvement over traditional and prompt-only approaches.",
+      "tags": [
+        "Medical QA",
+        "MedMCQA",
+        "Answer-Expansion RAG",
+        "LLMs"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "role": "Ad hoc Computer Science Teacher",
+      "organization": "Qadira Girls' School / Al-Barkaat Public School",
+      "location": "Aligarh",
+      "period": "July 2025 — Present",
+      "points": [
+        "Teach Python programming to Classes XI and XII.",
+        "Teach Information Technology fundamentals to Classes IX and X.",
+        "Support practical computing skills through engaging lessons."
+      ]
+    },
+    {
+      "role": "Instructor",
+      "organization": "Department of Computer Science, Aligarh Muslim University",
+      "location": "Aligarh",
+      "period": "November 2025 — June 2026",
+      "points": [
+        "Guided BSc Computer Applications and MCA students during laboratory sessions.",
+        "Evaluated weekly assignments and monitored academic progress.",
+        "Provided technical guidance and assistance."
+      ]
+    },
+    {
+      "role": "Backend Developer Intern",
+      "organization": "Zidio Development",
+      "location": "Remote",
+      "period": "September 2024 — December 2024",
+      "points": [
+        "Contributed to backend development and API integration.",
+        "Built secure, optimized REST APIs with Node.js and Express."
+      ]
+    }
+  ],
+  "certifications": [
+    "Machine Learning A-Z: AI, Python",
+    "AI Engineer Core Track: LLM Engineering, RAG, QLoRA, Agents"
+  ],
+  "achievements": [
+    "UGC NET Qualified, 2026",
+    "3rd Rank · MCA, Aligarh Muslim University"
+  ]
+}
