@@ -76,7 +76,13 @@ const STOP_WORDS = new Set([
   "work", "would", "you",
 ]);
 
-export function retrieveByKeywords(question, chunks, topK = 3) {
+export function retrieveByKeywords(question, chunks, topK = 1) {
+  if (/\b(highest|max(?:imum)?)\b/i.test(question) && /\b(education|degree|qualification)\b/i.test(question)) {
+    const highestDegree = chunks.find((chunk) =>
+      chunk.category === "education" && /master|postgraduate|phd|doctor/i.test(chunk.title),
+    );
+    if (highestDegree) return [highestDegree];
+  }
   const terms = new Set(
     (question.toLowerCase().match(/[a-z0-9]+/g) || [])
       .filter((term) => term.length > 2 && !STOP_WORDS.has(term)),

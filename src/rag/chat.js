@@ -1,4 +1,5 @@
 import { embedQuestion } from "./embedder.js";
+import { portfolio } from "../data/portfolio.js";
 import { loadKnowledgeChunks, retrieveByKeywords, retrieveChunks } from "./retrieval.js";
 
 const DAILY_LIMIT_MESSAGE = "Ugh, I'm done for today.";
@@ -20,15 +21,18 @@ function answerFromPortfolio(context) {
   if (!context.length) {
     return "I couldn’t find a matching detail in Keshvi’s portfolio. Try asking about her skills, education, or a project.";
   }
-  return `Here’s what I found in Keshvi’s portfolio:\n\n${context
-    .slice(0, 3)
-    .map(({ title, text }) => `${title}: ${text.slice(0, 900)}`)
-    .join("\n\n")}`;
+  const { title, text } = context[0];
+  return `${title}: ${text.slice(0, 700)}`;
 }
 
 export async function askPortfolioAssistant(question, history = [], { signal } = {}) {
   const endpoint = import.meta.env.VITE_CHAT_API_URL;
   if (!endpoint) {
+    const normalized = question.toLowerCase();
+    if (/\b(e-?mail)\b/.test(normalized)) return `Email: ${portfolio.email}`;
+    if (/\b(phone|mobile|telephone)\b/.test(normalized)) return `Phone: ${portfolio.phone}`;
+    const social = portfolio.socials.find(({ label }) => normalized.includes(label.toLowerCase()));
+    if (social) return `${social.label}: ${social.href}`;
     const chunks = await loadKnowledgeChunks();
     return answerFromPortfolio(retrieveByKeywords(question, chunks));
   }
