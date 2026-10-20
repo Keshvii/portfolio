@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --force",
     "build": "vite build",
+    "evaluate:chatbot": "node scripts/evaluate-chatbot.js",
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages-clean && gh-pages -d dist"

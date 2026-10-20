@@ -1,13 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
-  ArrowDown, ArrowDownRight, ArrowRight, ArrowUpRight, BookOpen, Bot,
+  ArrowDown, ArrowDownRight, ArrowUpRight, BookOpen,
   Github, GraduationCap, Linkedin, Mail,
-  Menu, MessageCircle, Send, Sparkles, X,
+  Menu, MessageCircle, Sparkles, X,
 } from "lucide-react";
 import { portfolio } from "./data/portfolio.js";
-import { askPortfolioAssistant } from "./rag/chat.js";
-import { SUGGESTED_QUESTIONS } from "./rag/config.js";
+import Chatbot from "./components/Chatbot.jsx";
 
 const navLinks = [
   ["Work", "projects"], ["Research", "research"], ["About", "about"], ["Contact", "contact"],
@@ -66,6 +65,14 @@ function ProjectVisual({ motif, name }) {
     {motif === "edu" ? <div className="edu-screen">
       <div className="mock-sidebar"><b>ES</b><i /><i /><i /><i /></div>
       <div className="mock-main"><div className="mock-greet">Good morning, Instructor <span>✳</span></div><div className="mock-stats"><i><b>04</b><small>ACTIVE LABS</small></i><i><b>128</b><small>STUDENTS</small></i><i><b>92%</b><small>SUBMISSIONS</small></i></div><div className="mock-row"><span>Weekly assignment</span><b>AI generated <span>↗</span></b></div><div className="mock-progress"><i /><i /><i /><i /><i /><i /><i /><i /></div><div className="mock-foot"><span>● Python · Week 08</span><span>Open assignment ↗</span></div></div>
+    </div> : motif === "portfolio" ? <div className="portfolio-screen">
+      <div className="portfolio-browser-bar"><span /><span /><span /><i>keshvi.dev</i></div>
+      <div className="portfolio-browser-content">
+        <div className="portfolio-nav-preview"><b>k<span>.</span></b><span>WORK&nbsp;&nbsp; RESEARCH&nbsp;&nbsp; ABOUT</span></div>
+        <div className="portfolio-hero-preview"><div><small>DEVELOPER · AI RESEARCHER</small><b>Building with<br /><em>curiosity</em> in mind.</b><span>Full stack development and applied AI.</span></div><div className="portfolio-portrait-shape"><i>k.</i></div></div>
+        <div className="portfolio-work-preview"><small>SELECTED WORK</small><div><i>EduSync</i><i>Talk2Doc</i></div></div>
+      </div>
+      <div className="portfolio-assistant-preview"><span>✳ &nbsp; PORTFOLIO ASSISTANT</span><b>Ask about Keshvi’s work</b><i>Skills, projects, research…</i></div>
     </div> : <div className="talk-screen">
       <div className="phone-frame"><div className="phone-notch"/><span className="phone-greeting">Good afternoon, Aisha</span><small>Your consultation</small><div className="doctor-card"><div className="doctor-avatar">DR</div><div><b>Dr. Consultation</b><small>General physician</small></div><span className="online-dot" /></div><div className="appointment">UPCOMING SESSION <b>Today, 4:30 PM</b></div><div className="chat-preview"><span>Doctor</span><i>I've reviewed your report. Let's discuss it together.</i><small>2:42 PM</small></div><div className="phone-tab">⌂ &nbsp;&nbsp; ◷ &nbsp;&nbsp; ♡ &nbsp;&nbsp; ◉</div></div>
       <div className="chat-float"><span>Secure consultation</span><MessageCircle size={14} /></div>
@@ -153,64 +160,9 @@ function ProfileLightbox({ onClose }) {
   </motion.div>;
 }
 
-function ChatAssistant() {
-  const [open, setOpen] = useState(false);
-  const [input, setInput] = useState("");
-  const [messages, setMessages] = useState([{ role: "assistant", text: "Hi, I’m Keshvi’s portfolio assistant. Ask me about her skills, education, or projects." }]);
-  const [typing, setTyping] = useState(false);
-  const [failedQuestion, setFailedQuestion] = useState("");
-  const endRef = useRef(null);
-  const suggestionsVisible = messages.length === 1 && !typing;
-
-  useEffect(() => { endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" }); }, [messages, typing, open]);
-
-  async function send(value = input) {
-    const question = value.trim();
-    if (!question || typing) return;
-    const history = messages.filter((message) => ["user", "assistant"].includes(message.role) && !message.isError && message !== messages[0]).slice(-6);
-    setMessages((old) => [...old, { role: "user", text: question }]);
-    setInput("");
-    setFailedQuestion("");
-    setTyping(true);
-    try {
-      const answer = await askPortfolioAssistant(question, history);
-      setMessages((old) => [...old, { role: "assistant", text: answer }]);
-    } catch (error) {
-      setMessages((old) => [...old, {
-        role: "assistant",
-        isError: true,
-        dailyLimit: error.code === "daily_limit",
-        text: error.message || "The assistant is temporarily unavailable. Please try again.",
-      }]);
-      if (error.code !== "daily_limit") setFailedQuestion(question);
-    } finally {
-      setTyping(false);
-    }
-  }
-
-  return <>
-    <AnimatePresence>{open && <motion.aside className="chat-panel" initial={{ opacity: 0, y: 16, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 12, scale: 0.98 }} transition={{ duration: 0.2 }} aria-label="Keshvi portfolio assistant">
-      <div className="chat-header"><div className="chat-avatar"><Bot size={17} /></div><div><b>Ask about Keshvi</b><span><i /> Portfolio assistant</span></div><button aria-label="Close assistant" onClick={() => setOpen(false)}><X size={17} /></button></div>
-      <div className="chat-messages" aria-live="polite">
-        {messages.map((message, index) => <div key={`${message.role}-${index}`} className={`chat-message ${message.role}`}><div>
-          {message.text.split("\n\n").map((paragraph, paragraphIndex) => <p key={paragraphIndex}>{paragraph}</p>)}
-          {message.dailyLimit && <a className="chat-contact-link" href="mailto:keshvi030802@gmail.com">Connect with Keshvi at keshvi030802@gmail.com</a>}
-        </div></div>)}
-        {typing && <div className="chat-message assistant"><div><div className="typing-dots"><i /><i /><i /></div></div></div>}
-        {failedQuestion && !typing && <div className="chat-retry"><span>Something went wrong.</span><button type="button" onClick={() => send(failedQuestion)}>Try again <ArrowRight size={13} /></button></div>}
-        {suggestionsVisible && <div className="suggestions">{SUGGESTED_QUESTIONS.map((question) => <button key={question} onClick={() => send(question)}>{question}<ArrowRight size={12} /></button>)}</div>}
-        <div ref={endRef} />
-      </div>
-      <form className="chat-compose" onSubmit={(event) => { event.preventDefault(); send(); }}><input value={input} onChange={(event) => setInput(event.target.value)} placeholder="Ask a question..." aria-label="Ask a question" maxLength={1000} /><button aria-label="Send question" type="submit" disabled={!input.trim() || typing}><Send size={15} /></button></form>
-      <div className="chat-disclaimer">Answers are based on Keshvi’s portfolio information.</div>
-    </motion.aside>}</AnimatePresence>
-    <button className={`chat-launcher ${open ? "active" : ""}`} aria-label={open ? "Close portfolio assistant" : "Open portfolio assistant"} aria-expanded={open} onClick={() => setOpen(!open)}>{open ? <X size={20} /> : <><MessageCircle size={18} /><span>Ask me</span><span className="launcher-spark">✳</span></>}</button>
-  </>;
-}
-
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   useEffect(() => { const handler = () => setScrolled(window.scrollY > 30); handler(); window.addEventListener("scroll", handler, { passive: true }); return () => window.removeEventListener("scroll", handler); }, []);
-  return <div className={scrolled ? "app scrolled" : "app"}><Header onOpenProfile={() => setProfileOpen(true)} /><main><Hero onOpenProfile={() => setProfileOpen(true)} /><Projects /><Research /><About /><Skills /><Contact /></main><Footer /><ChatAssistant /><AnimatePresence>{profileOpen && <ProfileLightbox onClose={() => setProfileOpen(false)} />}</AnimatePresence></div>;
+  return <div className={scrolled ? "app scrolled" : "app"}><Header onOpenProfile={() => setProfileOpen(true)} /><main><Hero onOpenProfile={() => setProfileOpen(true)} /><Projects /><Research /><About /><Skills /><Contact /></main><Footer /><Chatbot /><AnimatePresence>{profileOpen && <ProfileLightbox onClose={() => setProfileOpen(false)} />}</AnimatePresence></div>;
 }

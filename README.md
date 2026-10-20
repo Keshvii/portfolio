@@ -29,8 +29,6 @@ Without `VITE_CHAT_API_URL`, the assistant uses local keyword search over the po
 
 The assistant uses `cohere/north-mini-code:free` through OpenRouter and the vectors in `public/portfolio-embeddings.json`. It embeds each question with the compatible MiniLM model in the browser, retrieves relevant portfolio chunks, and sends those chunks plus a short chat history to the API. Retrieved text is treated as reference data, not instructions.
 
-If OpenRouter reports a usage limit, the assistant replies “Ugh, I'm done for today.” and provides a direct email link to Keshvi at `keshvi030802@gmail.com`.
-
 ## Build
 
 ```sh

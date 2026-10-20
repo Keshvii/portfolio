@@ -116,6 +116,27 @@
         "PostgreSQL"
       ],
       "motif": "talk"
+    },
+    {
+      "name": "Portfolio",
+      "type": "Personal website",
+      "number": "03",
+      "title": "Responsive portfolio with a grounded AI assistant",
+      "description": "A React portfolio presenting Keshvi’s projects, research, experience, education, and skills, with a semantic chat assistant for exploring portfolio information.",
+      "details": [
+        "Responsive single-page site built with React and Vite",
+        "Browser-based MiniLM embeddings retrieve relevant portfolio facts",
+        "Cosine-similarity search uses a curated, precomputed knowledge index",
+        "Cloudflare Worker handles LLM requests without exposing provider credentials"
+      ],
+      "stack": [
+        "React",
+        "Vite",
+        "Transformers.js",
+        "MiniLM",
+        "Cloudflare Workers"
+      ],
+      "motif": "portfolio"
     }
   ],
   "publications": [
